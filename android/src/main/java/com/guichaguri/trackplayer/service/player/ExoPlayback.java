@@ -10,7 +10,6 @@ import com.facebook.react.bridge.Promise;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Format;
-import com.google.android.exoplayer2.PlaybackException;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Timeline;
@@ -80,13 +79,13 @@ public abstract class ExoPlayback<T extends Player> implements  MetadataOutput, 
 
 
     @Override
-    public void onPlayerError(PlaybackException error) {
+    public void onPlayerError(ExoPlaybackException error) {
         Player.Listener.super.onPlayerError(error);
         String code;
 
-        if (error.errorCode == ExoPlaybackException.TYPE_SOURCE) {
+        if (error.type == ExoPlaybackException.TYPE_SOURCE) {
             code = "playback-source";
-        } else if (error.errorCode == ExoPlaybackException.TYPE_RENDERER) {
+        } else if (error.type == ExoPlaybackException.TYPE_RENDERER) {
             code = "playback-renderer";
         } else {
             code = "playback"; // Other unexpected errors related to the playback
